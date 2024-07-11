@@ -1,42 +1,44 @@
-import React, { useContext } from 'react'
-import { useState } from 'react'
+import React from 'react'
+import { useState, useContext } from 'react'
 import { ToastContainer, toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
-import { UserContext } from '../context/UserContext'
+import { PropertyContext } from '../context/PropertiesContext'; // Adjust the path as needed
+
+
+
 export default function AddProperty() {
 
-  const {currentUser}= useContext(UserContext)
   const navigate = useNavigate();
+  const { addProperty } = useContext(PropertyContext);
   const [title, setTitle] = useState()
   const [description, setDescription] = useState()
   const [price, setPrice] = useState()
   const [address, setAddress] = useState()
   const [image, setImage] = useState()
 
-function handleSubmit(e){
+  function handleSubmit(e) {
+    e.preventDefault();
   
-  e.preventDefault()
-
- fetch('http://localhost:3000/listings', {
-  method: 'POST',
-  body: JSON.stringify({
-    title: title,
-    description: description,
-    price: price,
-    address:address,
-    image: image,
-  }),
-  headers: {
-    'Content-type': 'application/json; charset=UTF-8',
-  },
-})
-  .then((response) => response.json())
-  .then((res) =>{
-    navigate('/allproperties')
-    toast.success('Listing added successfully !')
+    const propertyData = {
+      title: title,
+      description: description,
+      price: price,
+      address: address,
+      image: image
+    };
+  
+    addProperty(propertyData)
+      .then(() => {
+        navigate('/allproperties');
+        toast.success('Property added successfully!');
+      })
+      .catch((error) => {
+        console.error('Error adding property:', error);
+        toast.error('Failed to add property');
+      });
   }
-  );
-}
+
+  
   return (
     <div className='grid grid-cols-2 h-[80vh] bg-white mt-6 rounded-3xl'>
       <div className='bg-white text-white flex justify-center items-center'>
