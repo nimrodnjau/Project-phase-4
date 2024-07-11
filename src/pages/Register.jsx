@@ -1,14 +1,38 @@
 import React from 'react'
-import { useContext } from 'react'
+import { useContext ,useState} from 'react'
 import { UserContext } from '../context/UserContext';
+import {toast} from 'react-toastify'
+
 
 
 export default function Register() {
+
     const {register_user} = useContext(UserContext)
 
+   const[name,setName] = useState('') 
+    const[email,setEmail] = useState('')
+    const[password,setPassword] = useState('')
+    const[confirmPassword,setConfirmPassword] = useState('')
+    const[is_organizer,setIs_organizer] = useState("false")
 
+    console.log(email,password,confirmPassword,name,is_organizer)
+
+    function handleSubmit(e){
+      e.preventDefault()
+      if(password !== confirmPassword){
+        toast.error('Password do not match')
+        return
+
+      }
+     register_user(name,email,password,is_organizer)
+     setEmail('')
+     setPassword('')
+     setConfirmPassword('')
+     setName('')
+     is_organizer('false')
+    }
   return (
-    
+      
  
     
 
@@ -64,7 +88,7 @@ export default function Register() {
           </p>
         </div>
        <h1 className="mt-6 text-5xl text-center font-extrabold  text-blue-600 sm:text-3xl md:text-4xl pr-10 pb-20" > Register your account</h1>
-        <form action="#" className="mt-8 grid grid-cols-6 gap-6">
+        <form onSubmit={handleSubmit} action="#" className="mt-8 grid grid-cols-6 gap-6">
          
           <div className="col-span-6 ">
             <label htmlFor="LastName" className="block text-sm font-medium text-blue-500">
@@ -76,6 +100,7 @@ export default function Register() {
               id="LastName"
               name="last_name"
                class="w-full pl-4 pr-6 py-4 font-bold placeholder-gray-900 rounded-full focus:outline-none  hover:border-blue-500 border-2"
+               value={name || ''} onChange={(e)=>setName(e.target.value)}
             />
           </div>
 
@@ -87,6 +112,7 @@ export default function Register() {
               id="Email"
               name="email"
              class="w-full pl-4 pr-6 py-4 font-bold placeholder-gray-900 rounded-full focus:outline-none  hover:border-blue-500 border-2"
+             value={email || ''} onChange={(e)=>setEmail(e.target.value)}
             />
           </div>
 
@@ -98,23 +124,35 @@ export default function Register() {
               id="Password"
               name="password"
              class="w-full pl-4 pr-6 py-4 font-bold placeholder-gray-900 rounded-full focus:outline-none  hover:border-blue-500 border-2"
+             value={password || ''} onChange={(e)=>setPassword(e.target.value)}
             />
           </div>
 
           <div className="col-span-6 sm:col-span-3">
-            <label htmlFor="PasswordConfirmation" className="block text-sm font-medium text-blue-600">
-              Password Confirmation
+            <label htmlFor="ConfirmPassword" className="block text-sm font-medium text-blue-600">
+              Confirm Password
             </label>
 
             <input
               type="password"
-              id="PasswordConfirmation"
+              id="ConfirmPassword"
               name="password_confirmation"
               class="w-full pl-4 pr-6 py-4 font-bold placeholder-gray-900 rounded-full focus:outline-none  hover:border-blue-500 border-2"
+               value={confirmPassword|| ''} onChange={(e)=>setConfirmPassword(e.target.value)}
             />
           </div>
-
           
+
+          <div className="col-span-6  w-full mx-auto ">
+            <label for="countries" class="col-span-6 block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select an option</label>
+            <select onChange={e => setIs_organizer(e.target.value)} class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+              {/* <option selected>Choose a country</option> */}
+              <option selected value='false'>User</option>
+              <option value='true'>Agent</option>
+              
+            </select>
+          </div>
+
           
           <div className="col-span-6 sm:flex sm:items-center sm:gap-4">
             <button

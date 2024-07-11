@@ -13,6 +13,7 @@ import { UserProvider } from './context/UserContext';
 import Profile from './pages/Profile'
 import Login from './pages/Login';
 import Register from './pages/Register';
+import UpdateProperty from './pages/UpdateProperty';
 
 
 function App() {
@@ -33,6 +34,7 @@ function App() {
              <Route path='/login' element={<Login/>}/>
              <Route path='/register' element = {<Register></Register>}/>
             <Route path="/profile" element={<Profile/>} />
+            <Route path="/updateproperty/:id" element={<UpdateProperty/>}/>
     
           </Route>
         </Routes>
