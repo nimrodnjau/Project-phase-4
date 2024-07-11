@@ -10,10 +10,11 @@ import Listing from './components/Listing';
 import Indvidualproperty from './pages/Individualproperty';
 import { PropertyProvider } from './context/PropertiesContext';
 import { UserProvider } from './context/UserContext';
-import Profile from './pages/Profile'
+
 import Login from './pages/Login';
 import Register from './pages/Register';
 import UpdateProperty from './pages/UpdateProperty';
+import Profile from './pages/Profile';
 
 
 function App() {
@@ -21,9 +22,11 @@ function App() {
 
   return (
     <>
-      <UserProvider>
+   
+<BrowserRouter>
+ <UserProvider>
       <PropertyProvider>
-      <BrowserRouter>
+      
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route path="/" element={<Home />} />
@@ -35,12 +38,16 @@ function App() {
              <Route path='/register' element = {<Register></Register>}/>
             <Route path="/profile" element={<Profile/>} />
             <Route path="/updateproperty/:id" element={<UpdateProperty/>}/>
-    
+            
           </Route>
         </Routes>
-      </BrowserRouter>
+      
       </PropertyProvider>
       </UserProvider>
+      </BrowserRouter>
+
+  
+     
     </>
   )
 }

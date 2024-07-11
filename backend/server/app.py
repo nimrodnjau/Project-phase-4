@@ -71,7 +71,7 @@ def logout():
     return jsonify({'message': 'Successfully logged out'}), 200
 
 # Fetch current user
-@app.route('/current-user', methods=['GET'])
+@app.route('/current_user', methods=['GET'])
 @jwt_required()
 def get_current_user():
     current_user_id = get_jwt_identity()

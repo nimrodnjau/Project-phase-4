@@ -16,37 +16,27 @@ function handleSubmit(e){
 
   return (
 
-  <div className="relative py-20 2xl:py-40 bg-white overflow-hidden">
-     <img class="hidden lg:block absolute inset-0 mt-32" src="zospace-assets/lines/line-mountain.svg" alt=""/>
-  <img class="hidden lg:block absolute inset-y-0 right-0 -mr-40 -mt-32" src="zospace-assets/lines/line-right-long.svg" alt=""/>
-  <div class="relative container px-4 mx-auto">
-    <div class="max-w-5xl mx-auto">
-      <div class="flex flex-wrap items-center -mx-4">
-        <div class="w-full lg:w-1/2 px-4 mb-16 lg:mb-0">
-          <div class="max-w-md">
-            <span class="text-lg text-blue-500 font-bold text-center items-center justify-center">Login to Your Account</span>
-            <h2 class="mt-8 mb-12 text-5xl font-bold font-heading text-blue-500">Welcome Back to Your Real Estate Hub</h2>
-            <p class="text-lg text-blue-500">
-              <span>Access your saved listings and personalized recommendations </span>
-              <span class="text-blue-500"> by logging into your account.</span>
-            </p>
-          </div>
-        </div>
+ <div className="relative py-20 2xl:py-40 bg-white overflow-hidden">
+      <img className="hidden lg:block absolute inset-0 mt-32" src="zospace-assets/lines/line-mountain.svg" alt="" />
+      <img className="hidden lg:block absolute inset-y-0 right-0 -mr-40 -mt-32" src="zospace-assets/lines/line-right-long.svg" alt="" />
+      <div className="relative container px-4 mx-auto">
+        <div className="max-w-5xl mx-auto">
+          <div className="flex flex-wrap items-center -mx-4">
+            <div className="w-full lg:w-1/2 px-4 mb-16 lg:mb-0">
+              <div className="max-w-md">
+                <span className="text-lg text-blue-500 font-bold text-center items-center justify-center">Login to Your Account</span>
+                <h2 className="mt-8 mb-12 text-5xl font-bold font-heading text-blue-500">Welcome Back to Your Real Estate Hub</h2>
+                <p className="text-lg text-blue-500">
+                  <span>Access your saved listings and personalized recommendations </span>
+                  <span className="text-blue-500"> by logging into your account.</span>
+                </p>
+              </div>
+            </div>
         <div class="w-full lg:w-1/2 px-4">
           <div class="px-6 lg:px-20 py-12 lg:py-24 bg-blue-600 rounded-lg">
             <form action="#" onSubmit={handleSubmit}>
               <h3 class="mb-10 text-4xl text-white font-bold font-heading text-center" >Login to Your Account</h3>
-              <div class="flex items-center pl-6 mb-3 bg-white rounded-full">
-                <span class="inline-block pr-3 py-2 border-r border-gray-50">
-                  <svg class="w-5 h-5" width="20" height="21" viewbox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path fill-rule="evenodd" clip-rule="evenodd" d="M7.29593 0.492188C4.81333 0.492188 2.80078 2.50474 2.80078 4.98734C2.80078 7.46993 4.81333 9.48248 7.29593 9.48248C9.77851 9.48248 11.7911 7.46993 11.7911 4.98734C11.7911 2.50474 9.77851 0.492188 7.29593 0.492188ZM3.69981 4.98734C3.69981 3.00125 5.30985 1.39122 7.29593 1.39122C9.28198 1.39122 10.892 3.00125 10.892 4.98734C10.892 6.97342 9.28198 8.58346 7.29593 8.58346C5.30985 8.58346 3.69981 6.97342 3.69981 4.98734Z" fill="black"></path>
-                    <path d="M5.3126 10.3816C2.38448 10.3816 0.103516 13.0524 0.103516 16.2253V19.8214C0.103516 20.0696 0.304772 20.2709 0.55303 20.2709H14.0385C14.2867 20.2709 14.488 20.0696 14.488 19.8214C14.488 19.5732 14.2867 19.3719 14.0385 19.3719H1.00255V16.2253C1.00255 13.4399 2.98344 11.2806 5.3126 11.2806H9.27892C10.5443 11.2806 11.6956 11.9083 12.4939 12.9335C12.6465 13.1293 12.9289 13.1644 13.1248 13.0119C13.3207 12.8594 13.3558 12.5769 13.2033 12.381C12.2573 11.1664 10.8566 10.3816 9.27892 10.3816H5.3126Z" fill="black"></path>
-                    <rect x="15" y="15" width="5" height="1" rx="0.5" fill="black"></rect><rect x="17" y="18" width="5" height="1" rx="0.5" transform="rotate(-90 17 18)" fill="black"></rect>
-                  </svg>
-                </span>
-                <input  class="w-full pl-4 pr-6 py-4 font-bold placeholder-gray-900 rounded-r-full focus:outline-none" type="text" placeholder="kindly enter your username"/>
-              </div>
-
+            
 
 
               <div class="flex items-center pl-6 mb-3 bg-white rounded-full">
@@ -68,15 +58,7 @@ function handleSubmit(e){
                 </span>
                 <input class="w-full pl-4 pr-6 py-4 font-bold placeholder-gray-900 rounded-r-full focus:outline-none" type="password" value={password || ""} onChange={(e)=> setPassword(e.target.value)} placeholder="Password"/>
               </div>
-              <div class="flex items-center pl-6 mb-6 bg-white rounded-full">
-                <span class="inline-block pr-3 py-2 border-r border-gray-50">
-                  <svg class="w-5 h-5" width="20" height="21" viewbox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M15.6243 13.5625C15.3939 13.5625 15.2077 13.7581 15.2077 14V16.4517C15.2077 18.2573 14.0443 20.125 12.0973 20.125H5.42975C3.56848 20.125 1.87435 18.3741 1.87435 16.4517V10.5H15.6243C15.8547 10.5 16.041 10.3044 16.041 10.0625C16.041 9.82058 15.8547 9.625 15.6243 9.625H15.2077V5.95175C15.2077 2.39183 12.8635 0 9.37435 0H7.70768C4.21855 0 1.87435 2.39183 1.87435 5.95175V9.625H1.45768C1.22728 9.625 1.04102 9.82058 1.04102 10.0625V16.4517C1.04102 18.8322 3.13268 21 5.42975 21H12.0972C14.3089 21 16.0409 19.0023 16.0409 16.4517V14C16.041 13.7581 15.8547 13.5625 15.6243 13.5625ZM2.70768 5.95175C2.70768 2.86783 4.67022 0.875 7.70768 0.875H9.37435C12.4119 0.875 14.3743 2.86783 14.3743 5.95175V9.625H2.70768V5.95175Z" fill="black"></path>
-                    <path d="M18.8815 9.3711C18.7482 9.17377 18.4878 9.12827 18.3003 9.26701L8.58655 16.4919L6.75235 14.5655C6.58942 14.3944 6.32608 14.3944 6.16322 14.5655C6.00028 14.7366 6.00028 15.0131 6.16322 15.1842L8.24655 17.3717C8.32695 17.4561 8.43362 17.4999 8.54115 17.4999C8.62488 17.4999 8.70868 17.4732 8.78282 17.4194L18.7828 9.98185C18.9703 9.84143 19.0141 9.56843 18.8815 9.3711Z" fill="black"></path>
-                  </svg>
-                </span>
-                <input class="w-full pl-4 pr-6 py-4 font-bold placeholder-gray-900 rounded-r-full focus:outline-none" type="password" placeholder="Repeat password" />
-              </div>
+              
              <button type="submit" class="py-4 w-full bg-blue-500 hover:bg-white hover:text-blue-600 text-white font-bold rounded-full transition duration-200">Get started</button>
             </form>
           </div>

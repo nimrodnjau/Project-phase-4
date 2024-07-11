@@ -9,7 +9,7 @@ import {UserContext} from '../context/UserContext'
 
 export default function Home() {
 
-const {currentUser,register_user} = useContext(UserContext)
+
 
 
 

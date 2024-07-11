@@ -1,181 +1,133 @@
-import React, { useState ,useEffect} from 'react'
-import { createContext } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { HiMiniArrowUpTray } from 'react-icons/hi2'
-import { toast } from 'react-toastify'
+import React, { useState, useEffect, createContext } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
+export const UserContext = createContext();
 
+export const UserProvider = ({ children }) => {
+  const navigate = useNavigate();
+  const [currentUser, setCurrentUser] = useState(null);
+  const [auth_token, setAuth_token] = useState(() => localStorage.getItem("access_token") ? localStorage.getItem("access_token") : null);
 
-export const UserContext = createContext()
+  const register_user = (name, email, password) => {
+    fetch('http://127.0.0.1:5000/register', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ name, email, password })
+    })
+      .then(response => response.json())
+      .then(data => {
+        if (data.message === 'User registered successfully') {
+          toast.success('Registered successfully! Please log in.');
+          navigate('/login');
+        } else {
+          toast.error(data.message);
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        toast.error('An error occurred while registering.');
+      });
+  };
 
-export const UserProvider = ({children}) => {
+  const login_user = (email, password) => {
+    fetch('http://127.0.0.1:5000/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ email, password })
+    })
+      .then(response => response.json())
+      .then(data => {
+        if (data.message === 'User logged in successfully') {
+          setAuth_token(data.token);
+          localStorage.setItem('access_token', data.token);
+          setCurrentUser({
+            id: data.user.id,
+            name: data.user.name,
+            email: data.user.email,
+            is_admin: data.user.is_admin,
+          });
+          toast.success('Logged in successfully!');
+          navigate('/dashboard');
+        } else {
+          toast.error(data.message);
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        toast.error('An error occurred while logging in.');
+      });
+  };
 
-     const navigate = useNavigate()
-    const [currentUser, setCurrentUser] = useState("")
-    const [onChange, setOnChange] = useState(false)
+  const logout_user = () => {
+    setAuth_token(null);
+    setCurrentUser(null);
+    localStorage.removeItem('access_token');
+    toast.success('Logged out successfully!');
+    navigate('/login');
+  };
 
+  const update_user = (name, email, password) => {
+    fetch(`http://127.0.0.1:5000/update/${currentUser.id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${auth_token}`
+      },
+      body: JSON.stringify({ name, email, password })
+    })
+      .then(response => response.json())
+      .then(data => {
+        if (data.message === 'User updated successfully') {
+          setCurrentUser({
+            ...currentUser,
+            name,
+            email,
+          });
+          toast.success('Profile updated successfully!');
+        } else {
+          toast.error(data.message);
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        toast.error('An error occurred while updating the profile.');
+      });
+  };
 
-// All your functions and state variables will be available to all the children components that are wrapped in the UserProvider
-   //    REGISTER USER
-    const register_user = (name,email,password,is_organizer) => {
-       
- fetch('http://localhost:3000/users', {
-  method: 'POST',
-  body: JSON.stringify({
-    name : name,
-    email : email,
-    password : password,
-    is_organizer : is_organizer
-
-  }),
-  headers: {
-    'Content-type': 'application/json; charset=UTF-8',
-  },
-})
-  .then((response) => response.json())
-  .then((res) =>{
-    // navigate('/allproperties')
-    if(res.success){
-         toast.success(res.success)
-    }
-    else if(res.error){
-      toast.error(res.error)
-    }
-    else {
-      toast.error('Something went wrong !')
-    }
-   
-  }
-  );
-    }
-
-
-      //  useEffect(() => {
-  //    fetch('http://localhost:3000/listings')
-  //    .then((response) => response.json())
-  //    .then((json) =>{
-  //      setListings(json)
-  //    } );
-  //  },[])
-
-
-
-    const contextData = {
-        currentUser, 
-        setCurrentUser,
-        register_user
-    }
-
-
-    //    //    Login USER
-    //    const login_user = (email, password) =>{
-    //     fetch(`${server_url}/login`, {
-    //         method: 'POST',
-    //         body: JSON.stringify({
-    //             email: email,
-    //             password: password,
-    //         }),
-    //         headers: {
-    //           'Content-type': 'application/json',
-    //         },
-    //       })
-    //     .then((response) => response.json())
-    //     .then((res) =>{
-    //         // console.log(res)
-    //      if(res.access_token)
-    //         {
-    //             setAuth_token(res.access_token)
-    //             localStorage.setItem("access_token", res.access_token)
-
-    //             toast.success("Logged in Successfully!")
-    //             nav("/dashboard")
-    //         }
-    //         else if(res.error)
-    //         {
-    //             toast.error(res.error)
-    //         }
-    //         else {
-    //             toast.error("An error occured")
-    //         }
-
-    //     });
-    
-    // }
-
-
-
-    //    //    Update USER
-    //    const update_user = (name, phone_number,is_organizer, password) =>{
-    //     fetch(`${server_url}/users`, {
-    //         method: 'PUT',
-    //         body: JSON.stringify({
-    //             name: name,
-    //             password: password,
-    //             phone_number: phone_number,
-    //             is_organizer: is_organizer
-    //         }),
-    //         headers: {
-    //           'Content-type': 'application/json',
-    //           'Authorization': `Bearer ${auth_token}`
-    //         },
-    //       })
-    //     .then((response) => response.json())
-    //     .then((res) =>{
-    //      if(res.success)
-    //         {
-    //             toast.success(res.success)
-    //         }
-    //         else if(res.error)
-    //         {
-    //             toast.error(res.error)
-    //         }
-    //         else {
-    //             toast.error("An error occured")
-    //         }
-
-    //     });
-    
-    // }
-
-
-
-    // Logout
-    const logout = () =>{
-        fetch(`${server_url}/logout`, {
-            method: 'DELETE',
-            headers: {
-              'Content-type': 'application/json',
-              'Authorization': `Bearer ${auth_token}`
-            },
-          })
-        .then((response) => response.json())
-        .then((res) =>{
-         if(res.success)
-            {
-                localStorage.removeItem("access_token")
-                setCurrentUser(null)
-                setAuth_token(null)
-                setOnChange(!onChange)
-                toast.success(res.success)
-            }
-            else if(res.error)
-            {
-                toast.error(res.error)
-            }
-            else {
-                toast.error("An error occured")
-            }
-
+  useEffect(() => {
+    if (auth_token) {
+      fetch('http://127.0.0.1:5000/profile', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${auth_token}`
+        }
+      })
+        .then(response => response.json())
+        .then(data => {
+          setCurrentUser({
+            id: data.user.id,
+            name: data.user.name,
+            email: data.user.email,
+            is_admin: data.user.is_admin,
+          });
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          setAuth_token(null);
+          localStorage.removeItem('access_token');
         });
-
     }
+  }, [auth_token]);
 
-
-
-
-    return (
-        <UserContext.Provider value={{contextData}}>
-            {children}
-        </UserContext.Provider>
-    )
-}
+  return (
+    <UserContext.Provider value={{ currentUser, register_user, login_user, logout_user, update_user }}>
+      {children}
+    </UserContext.Provider>
+  );
+};
