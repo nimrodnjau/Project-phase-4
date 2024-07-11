@@ -1,75 +1,54 @@
-import React from 'react'
-import { useEffect, useState } from 'react'
-import Main from '../components/Main'
-import Listing from '../components/Listing'
+import React, { useContext, useEffect, useState } from 'react';
+import Listing from '../components/Listing';
 import ReactPaginate from 'react-paginate';
+import { PropertyContext } from '../context/PropertiesContext'; // Adjust path as per your file structure
 
 export default function AllProperties() {
-  const [listings, setListings] = useState([])
-  const [onDelete, setOnDelete] = useState()
-   useEffect(() => {
-     fetch('http://localhost:3000/listings')
-     .then((response) => response.json())
-     .then((json) =>{
-       setListings(json)
-     } );
-   },[])
- 
+  const { properties, deleteProperty } = useContext(PropertyContext) || { properties: [] };
 
-   //React pagination
-  
-  // Here we use item offsets; we could also use page offsets
-  // following the API or data you're working with.
+  const [onDelete, setOnDelete] = useState(null);
   const [itemOffset, setItemOffset] = useState(0);
 
-  // Simulate fetching listings from another resources.
-  // (This could be items from props; or items loaded in a local state
-  // from an API endpoint with useEffect and useState)
-  const endOffset = itemOffset +3;
-  console.log(`Loading items from ${itemOffset} to ${endOffset}`);
-  const currentItems = listings.slice(itemOffset, endOffset);
-  const pageCount = Math.ceil(listings.length /3);
+  // Pagination logic
+  const endOffset = itemOffset + 3;
+  const currentItems = properties.slice(itemOffset, endOffset);
+  const pageCount = Math.ceil(properties.length / 3);
 
-  // Invoke when user click to request another page.
+  // Handle page click for pagination
   const handlePageClick = (event) => {
-    const newOffset = (event.selected *3) % listings.length;
-    console.log(
-      `User requested page number ${event.selected}, which is offset ${newOffset}`
-    );
+    const newOffset = (event.selected * 3) % properties.length;
     setItemOffset(newOffset);
+  };
+
+  useEffect(() => {
+    // Fetch properties if needed (handled in PropertyProvider)
+    // fetchProperties();
+  }, []);
+
+  if (!properties) {
+    return <div>Loading...</div>; // Handle initial loading state
   }
-   
 
-  return ( 
+  return (
     <>
-     {/* <Main/> */}
-<div className=' grid grid-cols-3 md:grid-cols-3 gap-2 pb-16'>
-  
-  
-  
-   {
-      currentItems && currentItems.map((listing) => (
-        <Listing key={listing.id} listing={listing} setOnDelete={setOnDelete}/>
-      ))
-    }
-
-     
-  </div>     
-  <div className='flex flex-row bg-white text-blue-500 justify-center'>
-     <ReactPaginate
-        breakLabel="..."
-        nextLabel="next >"
-        containerClassName='flex gap-4'
-        activeClassName='text-gray-900 font-bold'
-      
-        onPageChange={handlePageClick}
-        pageRangeDisplayed={5}
-        pageCount={pageCount}
-        previousLabel="< previous"
-        renderOnZeroPageCount={null}
-      />
-   </div>
-      
+      <div className='grid grid-cols-3 md:grid-cols-3 gap-2 pb-16'>
+        {currentItems.map((property) => (
+          <Listing key={property.id} listing={property} setOnDelete={setOnDelete} />
+        ))}
+      </div>
+      <div className='flex flex-row bg-white text-blue-500 justify-center'>
+        <ReactPaginate
+          breakLabel="..."
+          nextLabel="next >"
+          containerClassName='flex gap-4'
+          activeClassName='text-gray-900 font-bold'
+          onPageChange={handlePageClick}
+          pageRangeDisplayed={5}
+          pageCount={pageCount}
+          previousLabel="< previous"
+          renderOnZeroPageCount={null}
+        />
+      </div>
     </>
-  )
+  );
 }

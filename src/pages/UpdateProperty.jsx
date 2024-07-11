@@ -2,6 +2,7 @@ import React from 'react'
 import { useState, useEffect } from 'react'
 import { ToastContainer, toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useParams } from 'react-router-dom'
 export default function UpdateProperty() {
 
@@ -16,7 +17,7 @@ export default function UpdateProperty() {
 
 
   useEffect(() => {
-    fetch(`http://localhost:3000/listings/${id}`)
+    fetch(`http://127.0.0.1:5000/real_estates/${id}`)
       .then(response => {
         if (!response.ok) {
           throw new Error('Network response was not ok');
@@ -38,7 +39,7 @@ export default function UpdateProperty() {
 
 
   const handleDelete = (id) => {
-    fetch(`http://localhost:3000/listings/${id}`, {
+    fetch(`http://127.0.0.1:5000/real_estates/${id}`, {
       method: 'DELETE',
     })
       .then(response => {
@@ -56,12 +57,13 @@ export default function UpdateProperty() {
         console.error('Error deleting listing:', error);
       });
   };
+
   //update property
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    fetch(`http://localhost:3000/listings/${id}`, {
+    fetch(`http://127.0.0.1:5000/real_estates/${id}`, {
       method: 'PATCH',
       body: JSON.stringify({
         title: title,

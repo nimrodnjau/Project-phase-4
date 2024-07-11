@@ -20,11 +20,11 @@ export default function AddProperty() {
     e.preventDefault();
   
     const propertyData = {
-      title: title,
-      description: description,
-      price: price,
-      address: address,
-      image: image
+       title,
+      description,
+    price,
+       address,
+       image
     };
   
     addProperty(propertyData)
