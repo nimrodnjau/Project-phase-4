@@ -12,121 +12,100 @@ export const UserProvider = ({ children }) => {
   const register_user = (name, email, password) => {
     fetch('http://127.0.0.1:5000/register', {
       method: 'POST',
+      body: JSON.stringify({ name, email, password }),
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ name, email, password })
     })
-      .then(response => response.json())
-      .then(data => {
-        if (data.message === 'User registered successfully') {
-          toast.success('Registered successfully! Please log in.');
-          navigate('/login');
+      .then((response) => response.json())
+      .then((res) => {
+        if (res.message === 'User registered successfully') {
+          toast.success(res.message);
+          navigate("/login");
         } else {
-          toast.error(data.message);
+          toast.error(res.message);
         }
       })
-      .catch(error => {
-        console.error('Error:', error);
-        toast.error('An error occurred while registering.');
+      .catch((error) => {
+        toast.error('Something went wrong!');
       });
   };
 
   const login_user = (email, password) => {
     fetch('http://127.0.0.1:5000/login', {
       method: 'POST',
+      body: JSON.stringify({ email, password }),
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ email, password })
     })
-      .then(response => response.json())
-      .then(data => {
-        if (data.message === 'User logged in successfully') {
-          setAuth_token(data.token);
-          localStorage.setItem('access_token', data.token);
-          setCurrentUser({
-            id: data.user.id,
-            name: data.user.name,
-            email: data.user.email,
-            is_admin: data.user.is_admin,
-          });
-          toast.success('Logged in successfully!');
-          navigate('/dashboard');
+      .then((response) => response.json())
+      .then((res) => {
+        if (res.access_token) {
+          setAuth_token(res.access_token);
+          localStorage.setItem("access_token", res.access_token);
+          toast.success("Logged in Successfully!");
+          navigate("/");
         } else {
-          toast.error(data.message);
+          toast.error(res.message || "An error occurred");
         }
-      })
-      .catch(error => {
-        console.error('Error:', error);
-        toast.error('An error occurred while logging in.');
       });
   };
 
-  const logout_user = () => {
-    setAuth_token(null);
-    setCurrentUser(null);
-    localStorage.removeItem('access_token');
-    toast.success('Logged out successfully!');
-    navigate('/login');
-  };
-
-  const update_user = (name, email, password) => {
-    fetch(`http://127.0.0.1:5000/update/${currentUser.id}`, {
-      method: 'PUT',
+  const logout = () => {
+    fetch('http://127.0.0.1:5000/logout', {
+      method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${auth_token}`
+        'Authorization': `Bearer ${auth_token}`,
       },
-      body: JSON.stringify({ name, email, password })
     })
-      .then(response => response.json())
-      .then(data => {
-        if (data.message === 'User updated successfully') {
-          setCurrentUser({
-            ...currentUser,
-            name,
-            email,
-          });
-          toast.success('Profile updated successfully!');
+      .then((response) => response.json())
+      .then((res) => {
+        if (res.message === 'Successfully logged out') {
+          localStorage.removeItem("access_token");
+          setCurrentUser(null);
+          setAuth_token(null);
+          toast.success(res.message);
         } else {
-          toast.error(data.message);
+          toast.error(res.message);
         }
-      })
-      .catch(error => {
-        console.error('Error:', error);
-        toast.error('An error occurred while updating the profile.');
       });
   };
 
   useEffect(() => {
     if (auth_token) {
-      fetch('http://127.0.0.1:5000/profile', {
-        method: 'GET',
+      fetch('http://127.0.0.1:5000/current_user', {
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${auth_token}`
-        }
+          'Authorization': `Bearer ${auth_token}`,
+        },
       })
-        .then(response => response.json())
-        .then(data => {
-          setCurrentUser({
-            id: data.user.id,
-            name: data.user.name,
-            email: data.user.email,
-            is_admin: data.user.is_admin,
-          });
-        })
-        .catch(error => {
-          console.error('Error:', error);
-          setAuth_token(null);
-          localStorage.removeItem('access_token');
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.user && data.user.email) {
+            setCurrentUser(data.user);
+          } else {
+            localStorage.removeItem("access_token");
+            setCurrentUser(null);
+            setAuth_token(null);
+            navigate("/login");
+          }
         });
     }
   }, [auth_token]);
 
+  const contextData = {
+    currentUser,
+    setCurrentUser,
+    register_user,
+    login_user,
+    logout,
+    auth_token,
+  };
+
   return (
-    <UserContext.Provider value={{ currentUser, register_user, login_user, logout_user, update_user }}>
+    <UserContext.Provider value={contextData}>
       {children}
     </UserContext.Provider>
   );
