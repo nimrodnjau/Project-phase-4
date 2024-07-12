@@ -1,0 +1,240 @@
+{
+  "listings": [
+    {
+      "id": "b35e",
+      "title": "title",
+      "description": "description",
+      "price": "price",
+      "address": "address",
+      "image": "https://img.freepik.com/free-photo/luxury-pool-villa-spectacular-contemporary-design-digital-art-real-estate-home-house-property-ge_1258-150749.jpg?uid=R152627132&semt=sph",
+      "comments": [
+        {
+          "id": 1,
+          "name": "Nimrod",
+          "rating": "8",
+          "review": "What a beautiful House."
+        },
+        {
+          "id": 2,
+          "name": "Sandie",
+          "rating": "4",
+          "review": "What a House."
+        },
+        {
+          "id": 3,
+          "name": "SIMON",
+          "rating": "4",
+          "review": "Beautiful House."
+        },
+        {
+          "id": 4,
+          "name": "Cynthia",
+          "rating": "7",
+          "review": "What a House."
+        }
+      ]
+    },
+    {
+      "id": "dccc",
+      "title": "sa33333333333333333333333",
+      "description": "aaaaaaaaaaaaaaaaaaaa23333333333333",
+      "price": "aaaaaaaaaaaaaa",
+      "address": "aaaaaaaaaaaaaaaaa",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSasrI23LQO1I4J9hFt2KvGnxfyWnCW58K2XMXZ5toXZFGGcU5rqEZq48eIC0tVZmAhlHE&usqp=CAU",
+      "comments": [
+        {
+          "id": 1,
+          "name": "Simon",
+          "rating": "7",
+          "review": "Great House."
+        }
+      ]
+    },
+    {
+      "id": "ff28",
+      "title": "we",
+      "description": "eeeeeeeeeeeeeeeeeeeee",
+      "price": "eeeeeeeeeeeeeee",
+      "address": "eeeeeeeeeeeee",
+      "image": "https://images.estately.net/193_1242317_0_1710286441_636x435.jpg",
+      "comments": [
+        {
+          "id": 1,
+          "name": "Nimrod",
+          "rating": "8",
+          "review": "What a beautiful House."
+        },
+        {
+          "id": 2,
+          "name": "Sandie",
+          "rating": "4",
+          "review": "What a House."
+        },
+        {
+          "id": 3,
+          "name": "SIMON",
+          "rating": "4",
+          "review": "Beautiful House."
+        },
+        {
+          "id": 4,
+          "name": "Cynthia",
+          "rating": "7",
+          "review": "What a House."
+        }
+      ]
+    },
+    {
+      "id": "5030",
+      "title": "simon",
+      "description": "ssssssssssssssssssss",
+      "price": "80000",
+      "address": "qweeeeeeeeeeee",
+      "image": "https://img.freepik.com/free-photo/view-new-york-city-sunset_23-2151278818.jpg?t=st=1720433673~exp=1720437273~hmac=a7f4773c03d9fa915a6eee88bb56da37240fcaf57c7f262196eccd9a980c696b&w=740",
+      "comments": [
+        {
+          "id": 1,
+          "name": "Nimrod",
+          "rating": "8",
+          "review": "What a beautiful House."
+        },
+        {
+          "id": 2,
+          "name": "Sandie",
+          "rating": "4",
+          "review": "What a House."
+        },
+        {
+          "id": 3,
+          "name": "SIMON",
+          "rating": "4",
+          "review": "Beautiful House."
+        },
+        {
+          "id": 4,
+          "name": "Cynthia",
+          "rating": "7",
+          "review": "What a House."
+        }
+      ]
+    },
+    {
+      "id": "2652",
+      "title": "AAAA",
+      "description": "aaaaaads",
+      "price": "sssssssssss",
+      "address": "sssssssssssssssssss",
+      "image": "https://remax-listingphotos-ca5.imgix.net/rets-images-vancouver-can/831df29a13350462a4770c4c6403e4a95bc1a420-1-large.jpeg",
+      "comments": [
+        {
+          "id": 1,
+          "name": "Nimrod",
+          "rating": "8",
+          "review": "What a beautiful House."
+        },
+        {
+          "id": 2,
+          "name": "Sandie",
+          "rating": "4",
+          "review": "What a House."
+        },
+        {
+          "id": 3,
+          "name": "SIMON",
+          "rating": "4",
+          "review": "Beautiful House."
+        },
+        {
+          "id": 4,
+          "name": "Cynthia",
+          "rating": "7",
+          "review": "What a House."
+        }
+      ]
+    },
+    {
+      "id": "738d",
+      "title": "as",
+      "description": "ssssssssssss",
+      "price": "sssssssssssssss",
+      "address": "sssssssssssss",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRDPD_NWhE_TMRhAPw13hP2wcQnONn5c1ljwfg8q2tWlAyALPkL977VKazIkpd48Jg49GA&usqp=CAU",
+      "comments": [
+        {
+          "id": 1,
+          "name": "Nimrod",
+          "rating": "8",
+          "review": "What a beautiful House."
+        },
+        {
+          "id": 2,
+          "name": "Sandie",
+          "rating": "4",
+          "review": "What a House."
+        },
+        {
+          "id": 3,
+          "name": "SIMON",
+          "rating": "4",
+          "review": "Beautiful House."
+        },
+        {
+          "id": 4,
+          "name": "Cynthia",
+          "rating": "7",
+          "review": "What a House."
+        }
+      ]
+    },
+    {
+      "id": "1f58",
+      "title": "sa",
+      "description": "aaaaaaaaaaaaaaa",
+      "price": "aaaaaaaaaaaaaaaa",
+      "address": "aaaaaaaaaaaaaa",
+      "image": "https://t3.ftcdn.net/jpg/01/18/46/52/360_F_118465200_0q7Of6UnbA8kDlYEe3a4PuIyue27fbuV.jpg",
+      "comments": [
+        {
+          "id": 1,
+          "name": "Nimrod",
+          "rating": "8",
+          "review": "What a beautiful House."
+        },
+        {
+          "id": 2,
+          "name": "Sandie",
+          "rating": "4",
+          "review": "What a House."
+        },
+        {
+          "id": 3,
+          "name": "SIMON",
+          "rating": "4",
+          "review": "Beautiful House."
+        },
+        {
+          "id": 4,
+          "name": "Cynthia",
+          "rating": "7",
+          "review": "What a House."
+        }
+      ]
+    }
+  ],
+  "users": [
+    {
+      "id": "1",
+      "name": "John Doe",
+      "email": "john.doe@example.com",
+      "phone": "123-456-7890",
+      "address": "123 Main St, Anytown, USA"
+    },
+    {
+      "id": "2",
+      "name": "Jane Smith",
+      "email": "jane.smith@example.com",
+      "phone": "987-654-3210",
+      "address": "456 Oak St, Springfield, USA"
+    }
+  ]
+}
