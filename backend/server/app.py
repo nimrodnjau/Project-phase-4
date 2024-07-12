@@ -1,4 +1,4 @@
-
+import os
 from datetime import timedelta 
 from flask import Flask, request, jsonify
 from flask_migrate import Migrate
@@ -6,12 +6,16 @@ from flask_jwt_extended import JWTManager, jwt_required, get_jwt_identity, get_j
 from flask_cors import CORS
 from flask_bcrypt import Bcrypt
 from sqlalchemy.exc import IntegrityError
+from dotenv import load_dotenv, dotenv_values
 from models import db, User, RealEstate, Purchase, Review  # Import db and models here
 
 bcrypt = Bcrypt()
+load_dotenv()
+config = dotenv_values(".env")
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///estate.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
+print(f"Connecting to database: {app.config['SQLALCHEMY_DATABASE_URI']}")
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = 'your_secret_key_here'
 app.config['JWT_SECRET_KEY'] = 'your_jwt_secret_key_here'
