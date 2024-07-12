@@ -29,7 +29,6 @@ export default function UpdateProperty() {
         setDescription(json.description);
         setPrice(json.price);
         setAddress(json.address);
-        setImage(json.image);
       })
       .catch(error => {
         toast.error('Failed to fetch listing data');
@@ -63,14 +62,13 @@ export default function UpdateProperty() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    fetch(`http://127.0.0.1:5000/real_estates/${id}`, {
+    fetch(`http://127.0.0.1:5000/real_estate/${id}`, {
       method: 'PATCH',
       body: JSON.stringify({
         title: title,
         description: description,
         price: price,
         address: address,
-        image: image,
       }),
       headers: {
         'Content-type': 'application/json; charset=UTF-8',

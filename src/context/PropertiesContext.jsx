@@ -10,8 +10,10 @@ export const PropertyProvider = ({ children }) => {
     fetchProperties();
   }, []);
 
+
+  //Fetching all properties
   const fetchProperties = () => {
-    fetch('http://127.0.0.1:5000/real_estates')
+    fetch('http://127.0.0.1:5000/real_estate')
       .then((response) => response.json())
       .then((res) => {
         setProperties(res);
@@ -21,8 +23,10 @@ export const PropertyProvider = ({ children }) => {
       });
   };
 
+
+  //Adding a property
   const addProperty = (propertyData) => {
-    fetch(`http://127.0.0.1:5000/real_estates`, {
+    fetch(`http://127.0.0.1:5000/real_estate`, {
       method: 'POST',
       body: JSON.stringify(propertyData),
       headers: {
@@ -44,8 +48,10 @@ export const PropertyProvider = ({ children }) => {
     });
   };
 
+
+  
   const editProperty = (propertyId, updatedData) => {
-    fetch(`http://127.0.0.1:5000/real_estates/${propertyId}`, {
+    fetch(`http://127.0.0.1:5000/real_estate/${propertyId}`, {
       method: 'PUT',
       body: JSON.stringify(updatedData),
       headers: {
@@ -67,8 +73,11 @@ export const PropertyProvider = ({ children }) => {
     });
   };
 
+
+
+  //Deleting a property
   const deleteProperty = (propertyId) => {
-    fetch(`http://127.0.0.1:5000/real_estates/${propertyId}`, {
+    fetch(`http://127.0.0.1:5000/real_estate/${propertyId}`, {
       method: 'DELETE',
       headers: {
         'Content-type': 'application/json',

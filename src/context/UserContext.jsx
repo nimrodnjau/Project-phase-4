@@ -8,7 +8,7 @@ export const UserProvider = ({ children }) => {
   const navigate = useNavigate();
   const [currentUser, setCurrentUser] = useState(null);
   const [auth_token, setAuth_token] = useState(() => localStorage.getItem("access_token") ? localStorage.getItem("access_token") : null);
-
+console.log("Debug it", auth_token )
   const register_user = (name, email, password) => {
     fetch('http://127.0.0.1:5000/register', {
       method: 'POST',
@@ -83,8 +83,10 @@ export const UserProvider = ({ children }) => {
       })
         .then((res) => res.json())
         .then((data) => {
+          console.log(data)
           if (data.user && data.user.email) {
             setCurrentUser(data.user);
+            console.log(data)
           } else {
             localStorage.removeItem("access_token");
             setCurrentUser(null);

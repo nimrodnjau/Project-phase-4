@@ -8,7 +8,7 @@ export default function Listing({listing}) {
   return (
     <Link key={listing.id}>
   <div className='bg-white my-[2rem] flex justify-center items-center relative hover:scale-105 transition duration-500 cursor-pointer '>
-    <img src={listing.image} alt="" className='w-[24rem] h-[26rem] rounded-[1.25rem]'/>
+    <img src={"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQd0P-8jGLtQjo5Xcy0YxABxzwUQ5Fwgs0ATQ&s"} alt="" className='w-[24rem] h-[26rem] rounded-[1.25rem]'/>
     <div className='bg-white flex items-center justify-between w-[22rem] h-[8rem] px-[1.38rem] rounded-[1.25rem] shadow-md absolute bottom-[-4rem] max-xs:w-[18rem]'>
       <div className='flex flex-col justify-between gap-1'>
         <p className='text-[1.5rem] font-semibold max-xs:text-[1.4rem]'>{listing.title}</p>

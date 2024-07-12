@@ -187,7 +187,6 @@ def update_password():
 # CRUD FOR REAL ESTATE LISTING
 # Create a new real estate listing
 @app.route('/real_estate', methods=['POST'])
-@jwt_required()
 def create_real_estate():
     data = request.get_json()
     title = data.get('title')
@@ -209,7 +208,7 @@ def create_real_estate():
     return jsonify({'message': 'Real estate listing created successfully'}), 201
 
 # Get all real estate listings
-@app.route('/real_estates', methods=['GET'])
+@app.route('/real_estate', methods=['GET'])
 def get_real_estates():
     try:
         real_estates = RealEstate.query.all()
@@ -232,7 +231,7 @@ def get_real_estates():
    
 
 # Get single real estate listing
-@app.route('/real_estates/<int:id>', methods=['GET'])
+@app.route('/real_estate/<int:id>', methods=['GET'])
 def get_real_estate(id):
     real_estate = RealEstate.query.get_or_404(id)
     if not real_estate:
@@ -250,13 +249,12 @@ def get_real_estate(id):
 
 # Update real estate listing
 @app.route('/real_estate/<int:id>', methods=['PATCH'])
-@jwt_required()
 def update_real_estate(id):
     data = request.get_json()
     real_estate = RealEstate.query.get(id)
-    user_id = get_jwt_identity()
+    
 
-    if not real_estate or real_estate.user_id != user_id:
+    if not real_estate :
         return jsonify({'message': 'You are not authorized to update this real estate listing'}), 404
     
     if 'title' in data:
@@ -273,12 +271,10 @@ def update_real_estate(id):
 
 # Delete real estate listing
 @app.route('/real_estate/<int:id>', methods=['DELETE'])
-@jwt_required()
 def delete_real_estate(id):
     real_estate = RealEstate.query.get_or_404(id)    
-    user_id = get_jwt_identity()
 
-    if not real_estate or real_estate.user_id != user_id:
+    if not real_estate :
         return jsonify({'message': 'You are not authorized to delete this real estate listing'}), 404
 
     db.session.delete(real_estate)
@@ -288,13 +284,13 @@ def delete_real_estate(id):
 # CRUD FOR REVIEW
 # Create a new review
 @app.route('/reviews', methods=['POST'])
-@jwt_required()
+
 def create_review():
     try:
      data = request.get_json()
-     rating = data.get('rating')
-     comment = data.get('comment')
-     user_id = get_jwt_identity()
+     rating = 4
+     comment = data.get('newComment')
+     user_id = data.get("id")
      real_estate_id = data.get('real_estate_id')
 
      review = Review(rating=rating, comment=comment, user_id=user_id, real_estate_id=real_estate_id)
@@ -345,7 +341,7 @@ def get_review(id):
 
 # Update a review
 @app.route('/reviews/<int:id>', methods=['PATCH'])
-@jwt_required()
+
 def update_review(id):
     data = request.get_json()
     
@@ -354,9 +350,9 @@ def update_review(id):
     if not review:
         return jsonify({'message': 'Review not found'}), 404
     
-    user_id = get_jwt_identity()
-    if review.user_id != user_id:
-        return jsonify({'message': 'You are not authorized to update this review'}), 404
+    # user_id = get_jwt_identity()
+    # if review.user_id != user_id:
+    #     return jsonify({'message': 'You are not authorized to update this review'}), 404
     
     if 'rating' in data:
         review.rating = data['rating']
@@ -372,12 +368,12 @@ def update_review(id):
 
 # Delete a review
 @app.route('/reviews/<int:id>', methods=['DELETE'])
-@jwt_required()
+
 def delete_review(id):
     review = Review.query.get(id)
-    user_id = get_jwt_identity()
+    # user_id = get_jwt_identity()
 
-    if not review or review.user_id != user_id:
+    if not review :
         return jsonify({'message': 'You are not authorized to delete this review'}), 404
 
     db.session.delete(review)
@@ -387,7 +383,7 @@ def delete_review(id):
 # CRUD FOR PURCHASE 
 # Create a new purchase
 @app.route('/purchases', methods=['POST'])
-@jwt_required()
+
 def create_purchase():
     data = request.get_json()
     user_id = get_jwt_identity()
@@ -438,7 +434,6 @@ def get_purchase(id):
 
 # Delete a purchase
 @app.route('/purchases/<int:id>', methods=['DELETE'])
-@jwt_required()
 def delete_purchase(id):
     try:
         purchase = Purchase.query.get(id)

@@ -4,12 +4,17 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { ReviewContext } from '../context/ReviewContext';
+import { UserContext } from '../context/UserContext';
 
 export default function IndividualProperty() {
   const navigate = useNavigate();
+  const {auth_token, currentUser } = useContext(UserContext);
+
+  console.log(auth_token, currentUser)
+
   const { id } = useParams();
   const [comments, setComments] = useState([]);
-  const [newComment, setNewComment] = useState({ name: '', rating: '', review: '' });
+  const [newComment, setNewComment] = useState({rating: '', review: '' });
   const [editingCommentId, setEditingCommentId] = useState(null);
   // const {
   //   comments = [],
@@ -24,64 +29,70 @@ export default function IndividualProperty() {
 
   const [listing, setListing] = useState(null);
 
-//fetching reviews(They aren't displaying when using useContext)
+
+
+//fetching comments(They aren't displaying when using useContext)
   useEffect(() => {
     fetchComments();
   }, [id]);
 
   const fetchComments = () => {
-
-    fetch(`http://127.0.0.1:5000/reviews/${id}`)
+    fetch(`http://127.0.0.1:5000/reviews`)
       .then(response => response.json())
       .then(data => setComments(data))
       .catch(error => console.error('Error fetching comments:', error));
   };
+
+  // const [auth_token, setAuth_token] = useState(() => localStorage.getItem("access_token") ? localStorage.getItem("access_token") : null);
+
   const handleSubmit = (event) => {
     event.preventDefault();
 
-if (editingCommentId) {
-  
-  fetch(`http://127.0.0.1:5000/reviews/${editingCommentId}`, {
-    method: 'PUT',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(newComment),
-  })
-    .then(response => response.json())
-    .then(() => {
-      fetchComments(); 
-      setEditingCommentId(null); 
-      setNewComment({ name: '', rating: '', review: '' }); 
-    })
-    .catch(error => console.error('Error editing comment:', error));
-} else {
+    //if the button is not for editing, its for posting
+// if (editingCommentId) {
+
+  // Editing a comment
+//   fetch(`http://127.0.0.1:5000/reviews/${editingCommentId}`, {
+//     method: 'PATCH',
+//     headers: {
+//       'Content-Type': 'application/json',
+//       'Authorization': `Bearer ${auth_token}`,
+//     },
+//     body: JSON.stringify(newComment),
+//   })
+//     .then(response => response.json())
+//     .then(() => {
+//       fetchComments(); 
+//       setEditingCommentId(null); 
+//       setNewComment({ rating: '', review: '' }); 
+//     })
+//     .catch(error => console.error('Error editing comment:', error));
+// } else {
  
-  fetch('http://127.0.0.1:5000/reviews', {
+
+  //Adding/POSTing a comment
+  console.log("You", auth_token)
+
+  fetch(`http://127.0.0.1:5000/reviews`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
+      
     },
-    body: JSON.stringify(newComment),
+    body: JSON.stringify({id: currentUser.id, newComment: newComment}),
   })
     .then(response => response.json())
     .then(() => {
       fetchComments(); 
-      setNewComment({ name: '', rating: '', review: '' });
+      setNewComment({ rating: '', review: '' });
     })
     .catch(error => console.error('Error adding comment:', error));
-}
+  // }
   };
 
 
 
   
-
-  
-//Submitting/POSTing a comment
-
-
-
 const handleInputChange = (event) => {
   const { name, value } = event.target;
   setNewComment({ ...newComment, [name]: value });
@@ -99,6 +110,10 @@ const handleEdit = (commentId) => {
 const handleCommentDelete = (commentId) => {
   fetch(`http://127.0.0.1:5000/reviews/${commentId}`, {
     method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${auth_token}`,
+    },
   })
     .then(() => {
       fetchComments(); 
@@ -116,7 +131,7 @@ const handleCancelEdit = () => {
   useEffect(() => {
     // Fetch property details by id
     const fetchProperty = () => {
-      fetch(`http://localhost:5000/real_estates/${id}`)
+      fetch(`http://localhost:5000/real_estate/${id}`)
         .then(response => {
         if (!response.ok) {
           throw new Error('Failed to fetch property');
@@ -164,12 +179,12 @@ if (!listing) {
 }
 
 return (
-  <div className='container mx-auto p-6'>
-    <div className="bg-white p-6 rounded-lg shadow-lg">
+  <div  className='container mx-auto p-6'>
+    <div  key={listing.id} className="bg-white p-6 rounded-lg shadow-lg">
       <div className="p-5">
         <img
           className="rounded-lg mx-auto my-4 shadow h-[70vh] w-full object-cover"
-          src={listing.image || "https://via.placeholder.com/150"}
+          src={listing.image || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQd0P-8jGLtQjo5Xcy0YxABxzwUQ5Fwgs0ATQ&s"}
           alt={listing.title}
         />
         <h5 className="text-4xl font-extrabold mb-4 p-6 text-center text-blue-700 underline">
@@ -186,29 +201,31 @@ return (
         </p>
       </div>
 
-      <div className="mb-3 font-normal text-gray-700 dark:text-gray-400">
+      {comments.map(comment => (
+      <div  className="mb-3 font-normal text-gray-700 dark:text-gray-400">
         <p style={{ fontSize: '24px', fontWeight: 'bold', textAlign: 'center', marginBottom: '20px' }}>
           <strong>ALL COMMENTS</strong>
         </p>
-        {/* {comments.map(comment => ( */}
+        
           <ul key={comments.id}>
             <li style={{ textAlign: 'center', marginBottom: '20px', maxWidth: '400px', margin: '0 auto' }}>
               <div style={{ backgroundColor: '#f0f0f0', padding: '15px', borderRadius: '8px', boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)' }}>
-                <p style={{ fontSize: '18px', fontWeight: 'bold', marginBottom: '5px' }}>
-                  <strong>{comments.name}</strong>
-                </p>
-                <p style={{ fontSize: '16px', marginBottom: '5px' }}>Rating: {comments.rating}</p>
-                <p style={{ fontSize: '14px', lineHeight: '1.5', padding: '10px', borderRadius: '3px', backgroundColor: 'white' }}>{comments.comment}</p>
+                {/* <p style={{ fontSize: '18px', fontWeight: 'bold', marginBottom: '5px' }}>
+                  <strong>{comments.name}</strong> */}
+                {/* </p> */}
+                <p style={{ fontSize: '16px', marginBottom: '5px' }}>Rating: {comment.rating}</p>
+                <p style={{ fontSize: '14px', lineHeight: '1.5', padding: '10px', borderRadius: '3px', backgroundColor: 'white' }}>{comment.comment}</p>
               </div>
 
-              <button onClick={() => handleEdit(comments.id)} className="text-black border border-blue-500 hover:border-blue-700 hover:bg-blue-700 hover:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-7 py-2.5 text-center me-2 mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-600 dark:focus:ring-blue-900">Edit</button>
+              <button onClick={() => handleEdit(comment.id)} className="text-black border border-blue-500 hover:border-blue-700 hover:bg-blue-700 hover:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-7 py-2.5 text-center me-2 mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-600 dark:focus:ring-blue-900">Edit</button>
 
 
-              <button onClick={() => handleCommentDelete(comments.id)} className="text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-900">Delete</button>
+              <button onClick={() => handleCommentDelete(comment.id)} className="text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-900">Delete</button>
             </li>
           </ul>
-        {/* ))} */}
+        
       </div>
+    ))}
 
       <div style={{ maxWidth: '600px', margin: '0 auto' }}>
         <form style={{ backgroundColor: '#f0f0f0', padding: '20px', borderRadius: '8px', boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)' }} onSubmit={handleSubmit}>
