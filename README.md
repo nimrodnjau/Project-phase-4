@@ -26,7 +26,7 @@ For the frontend:
 
 ## Live server
 * You can view the web live 
-* {frontend link}
+* https://real-estate-listing-ic2xpzehd-nimrodnjaus-projects.vercel.app
 
 
 ## Contexts Used:
