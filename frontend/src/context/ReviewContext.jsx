@@ -15,7 +15,7 @@ export const ReviewProvider = ({ children }) => {
 
   const fetchComments = () => {
 
-    fetch(`http://127.0.0.1:5000/reviews/${id}`)
+    fetch(`https://real-estate-listing-app.onrender.com/reviews/${id}`)
       .then(response => response.json())
       .then(data => setComments(data))
       .catch(error => console.error('Error fetching comments:', error));
@@ -25,7 +25,7 @@ export const ReviewProvider = ({ children }) => {
 
 if (editingCommentId) {
   
-  fetch(`http://127.0.0.1:5000/reviews/${editingCommentId}`, {
+  fetch(`https://real-estate-listing-app.onrender.com/reviews/${editingCommentId}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
@@ -78,7 +78,7 @@ if (editingCommentId) {
 
  
   const handleCommentDelete = (commentId) => {
-    fetch(`http://127.0.0.1:5000/reviews/${commentId}`, {
+    fetch(`https://real-estate-listing-app.onrender.com/reviews/${commentId}`, {
       method: 'DELETE',
     })
       .then(() => {

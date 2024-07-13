@@ -37,7 +37,7 @@ export default function IndividualProperty() {
   }, [id]);
 
   const fetchComments = () => {
-    fetch(`http://127.0.0.1:5000/reviews`)
+    fetch(`https://real-estate-listing-app.onrender.com/reviews`)
       .then(response => response.json())
       .then(data => setComments(data))
       .catch(error => console.error('Error fetching comments:', error));
@@ -73,7 +73,7 @@ export default function IndividualProperty() {
   //Adding/POSTing a comment
   console.log("You", auth_token)
 
-  fetch(`http://127.0.0.1:5000/reviews`, {
+  fetch(`https://real-estate-listing-app.onrender.com/reviews`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -108,7 +108,7 @@ const handleEdit = (commentId) => {
 
 //Deleting a comment
 const handleCommentDelete = (commentId) => {
-  fetch(`http://127.0.0.1:5000/reviews/${commentId}`, {
+  fetch(`https://real-estate-listing-app.onrender.com/reviews/${commentId}`, {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json',
@@ -131,7 +131,7 @@ const handleCancelEdit = () => {
   useEffect(() => {
     // Fetch property details by id
     const fetchProperty = () => {
-      fetch(`http://localhost:5000/real_estate/${id}`)
+      fetch(`https://real-estate-listing-app.onrender.com/real_estate/${id}`)
         .then(response => {
         if (!response.ok) {
           throw new Error('Failed to fetch property');
@@ -154,7 +154,7 @@ const handleCancelEdit = () => {
 
   //Deleting the property
   const handlePropertyDelete = () => {
-    fetch(`http://localhost:5000/real_estate/${listing.id}`), {
+    fetch(`https://real-estate-listing-app.onrender.com/real_estate/${listing.id}`), {
       method: 'DELETE',
       headers: {
       'Content-Type': 'application/json',

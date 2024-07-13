@@ -20,10 +20,7 @@ export default function AllProperties() {
     setItemOffset(newOffset);
   };
 
-  useEffect(() => {
-    // Fetch properties if needed (handled in PropertyProvider)
-    // fetchProperties();
-  }, []);
+  
 
   if (!properties) {
     return <div>Loading...</div>; // Handle initial loading state

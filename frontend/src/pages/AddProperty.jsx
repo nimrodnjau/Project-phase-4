@@ -17,7 +17,7 @@ function handleSubmit(e){
 
   e.preventDefault()
 
- fetch(`http://127.0.0.1:5000/real_estate`, {
+ fetch(`https://real-estate-listing-app.onrender.com/real_estate`, {
   method: 'POST',
   body: JSON.stringify({
      title, description, address,

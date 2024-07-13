@@ -10,7 +10,7 @@ export const UserProvider = ({ children }) => {
   const [auth_token, setAuth_token] = useState(() => localStorage.getItem("access_token") ? localStorage.getItem("access_token") : null);
 console.log("Debug it", auth_token )
   const register_user = (name, email, password) => {
-    fetch('http://127.0.0.1:5000/register', {
+    fetch('https://real-estate-listing-app.onrender.com/register', {
       method: 'POST',
       body: JSON.stringify({ name, email, password }),
       headers: {
@@ -32,7 +32,7 @@ console.log("Debug it", auth_token )
   };
 
   const login_user = (email, password) => {
-    fetch('http://127.0.0.1:5000/login', {
+    fetch('https://real-estate-listing-app.onrender.com/login', {
       method: 'POST',
       body: JSON.stringify({ email, password }),
       headers: {
@@ -53,7 +53,7 @@ console.log("Debug it", auth_token )
   };
 
   const logout = () => {
-    fetch('http://127.0.0.1:5000/logout', {
+    fetch('https://real-estate-listing-app.onrender.com/logout', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -75,7 +75,7 @@ console.log("Debug it", auth_token )
 
   useEffect(() => {
     if (auth_token) {
-      fetch('http://127.0.0.1:5000/current_user', {
+      fetch('https://real-estate-listing-app.onrender.com/current_user', {
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${auth_token}`,

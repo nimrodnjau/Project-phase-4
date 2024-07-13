@@ -57,4 +57,4 @@ const ContactMode = ({ icon: Icon, title, detail, buttonText }) => (
       {buttonText}
     </div>
   </div>
-  )
+  );

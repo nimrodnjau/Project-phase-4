@@ -17,7 +17,7 @@ export default function UpdateProperty() {
 
 
   useEffect(() => {
-    fetch(`http://127.0.0.1:5000/real_estates/${id}`)
+    fetch(`https://real-estate-listing-app.onrender.com/real_estates/${id}`)
       .then(response => {
         if (!response.ok) {
           throw new Error('Network response was not ok');
@@ -38,7 +38,7 @@ export default function UpdateProperty() {
 
 
   const handleDelete = (id) => {
-    fetch(`http://127.0.0.1:5000/real_estates/${id}`, {
+    fetch(`https://real-estate-listing-app.onrender.com/real_estates/${id}`, {
       method: 'DELETE',
     })
       .then(response => {
@@ -62,7 +62,7 @@ export default function UpdateProperty() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    fetch(`http://127.0.0.1:5000/real_estate/${id}`, {
+    fetch(`https://real-estate-listing-app.onrender.com/real_estate/${id}`, {
       method: 'PATCH',
       body: JSON.stringify({
         title: title,
